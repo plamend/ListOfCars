@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/car_add"
+        android:title="@string/car_add"/>
+    <item
+        android:id="@+id/car_search"
+        android:title="@string/car_search"/>
+
+
+</menu>

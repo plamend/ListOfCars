@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">ListOfCars</string>
+    <string name="car_add">Add</string>
+    <string name="car_search">Search</string>
+    <string name="car_edit">Edit</string>
+    <string name="car_delete">Delete</string>
+    <string name="car_name">Car name:</string>
+    <string name="add_car_info">Add car info</string>
+    <string name="add_button">Add</string>
+    <string name="car_make">Make:</string>
+    <string name="car_model">Model:</string>
+    <string name="car_pro_year">Production year:</string>
+    <string name="car_color">Color:</string>
+    <string name="edit_car_info">Edit car info</string>
+    <string name="car_changes_save">Save</string>
+</resources>

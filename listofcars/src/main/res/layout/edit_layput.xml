@@ -70,7 +70,7 @@
         android:textSize="12sp"
         android:inputType="text" />
     <Button
-        android:id="@+id/add_butoon"
+        android:id="@+id/edit_butoon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/car_changes_save"/>

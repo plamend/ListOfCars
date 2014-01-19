@@ -2,6 +2,7 @@ package net.wtfitio.listofcars;
 
 import android.app.Activity;
 import android.app.ListActivity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.Menu;
@@ -23,20 +24,74 @@ import java.util.zip.Inflater;
  */
 public class MainActivity extends Activity {
     List<Car> cars;
+    ListView list;
+    CarsAdapter adapter;
+    public static String ACT="ACT";
+    public static String CAR_NAME="CAR_NAME";
+    public static String CAR_MAKE="CAR_MAKE";
+    public static String CAR_MODEL="CAR_MODEL";
+    public static String CAR_P_YEAR="CAR_P_YEAR";
+    public static String CAR_COLOR="CAR_COLOR";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_layout);
 
-        ListView list = (ListView)findViewById(R.id.list);
-        this.cars =new ArrayList<Car>();
-        this.cars = genCars();
-        CarsAdapter adapter = new CarsAdapter(this,R.layout.cars_list_layout,cars);
-        list.setAdapter(adapter);
-        registerForContextMenu(list);
+
+
+
+
+
+
+            this.list = (ListView)findViewById(R.id.list);
+            this.cars =new ArrayList<Car>();
+            cars = genCars();
+            this.adapter = new CarsAdapter(this,R.layout.cars_list_layout,cars);
+            list.setAdapter(adapter);
+            registerForContextMenu(list);
+
+
+
+
+
 
 
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode==1){
+            if(resultCode==RESULT_OK){
+                Car car1;
+                car1= (Car) data.getSerializableExtra(AddActivity.OBJECT);
+                cars.add(car1);
+
+                list.setAdapter(adapter);
+
+            }
+        }
+            if(requestCode==2){
+                if(resultCode==RESULT_OK){
+                int pos = data.getIntExtra(EditActivity.POSITION,0);
+                //String tm_name_edit = intent.getStringExtra(CAR_NAME);
+                // String tm_make_edit = intent.getStringExtra(CAR_MAKE);
+                // String tm_model_edit= intent.getStringExtra(CAR_MODEL);
+                // String tm_year_edit = intent.getStringExtra(CAR_P_YEAR);
+                // String tm_color_edit= intent.getStringExtra(CAR_COLOR);
+                Car car1;
+                car1 = (Car) data.getSerializableExtra(EditActivity.OBJECT);
+                cars.set(pos,car1);
+                list.setAdapter(adapter);
+                }
+            }
+
+
+
+
+        }
+
+
 
     private List<Car> genCars() {
         List<Car> cars = new ArrayList<Car>();
@@ -102,16 +157,25 @@ public class MainActivity extends Activity {
             case R.id.car_delete:
                 if (info != null) {
                     DeleteCar(info.position);
+
+
                 }
         }
         return super.onContextItemSelected(item);
     }
 
     private void DeleteCar(int position) {
+    cars.remove(position);
+        list.setAdapter(adapter);
+
 
     }
 
     private void EditCar(int position) {
+        Intent intent = new Intent(this,EditActivity.class);
+        intent.putExtra(EditActivity.POSITION,position);
+        intent.putExtra(EditActivity.OBJECT,cars.get(position));
+        startActivityForResult(intent, 2);
 
     }
 
@@ -120,5 +184,7 @@ public class MainActivity extends Activity {
     }
 
     private void AddNewCar() {
+        Intent intent = new Intent(this,AddActivity.class);
+        startActivityForResult(intent, 1);
     }
 }

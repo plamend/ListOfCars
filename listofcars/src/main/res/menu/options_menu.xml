@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item
-        android:id="@+id/car_add"
-        android:title="@string/car_add"/>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:listofcars="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/car_search"
-        android:title="@string/car_search"/>
-
-
+        android:title="@string/car_search"
+        android:icon="@android:drawable/ic_menu_search"
+        listofcars:showAsAction="ifRoom|withText"
+        listofcars:actionViewClass="android.support.v7.widget.SearchView"/>
+    <item
+        android:id="@+id/car_add"
+        android:title="@string/car_add"
+        android:icon="@android:drawable/ic_menu_add"
+        listofcars:showAsAction="ifRoom"/>
 </menu>

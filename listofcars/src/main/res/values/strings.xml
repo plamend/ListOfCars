@@ -1,4 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <string name="app_name">ListOfCars</string>
     <string name="car_add">Add</string>
     <string name="car_search">Search</string>
@@ -13,4 +15,10 @@
     <string name="car_color">Color:</string>
     <string name="edit_car_info">Edit car info</string>
     <string name="car_changes_save">Save</string>
+    <string name="title_activity_test">test</string>
+    <string name="title_section1">Section 1</string>
+    <string name="title_section2">Section 2</string>
+    <string name="title_section3">Section 3</string>
+    <string name="action_settings">Settings</string>
+
 </resources>

@@ -4,6 +4,9 @@ import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.view.MenuItemCompat;
+import android.support.v4.widget.SearchViewCompat;
+import android.support.v7.app.ActionBarActivity;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -11,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.SearchView;
 
 import net.wtfitio.listofcars.adapter.CarsAdapter;
 import net.wtfitio.listofcars.car_class.Car;
@@ -22,7 +26,7 @@ import java.util.zip.Inflater;
 /**
  * Created by plamend on 1/17/14.
  */
-public class MainActivity extends Activity {
+public class MainActivity extends ActionBarActivity {
     List<Car> cars;
     ListView list;
     CarsAdapter adapter;
@@ -66,7 +70,6 @@ public class MainActivity extends Activity {
                 Car car1;
                 car1= (Car) data.getSerializableExtra(AddActivity.OBJECT);
                 cars.add(car1);
-
                 list.setAdapter(adapter);
 
             }
@@ -74,11 +77,6 @@ public class MainActivity extends Activity {
             if(requestCode==2){
                 if(resultCode==RESULT_OK){
                 int pos = data.getIntExtra(EditActivity.POSITION,0);
-                //String tm_name_edit = intent.getStringExtra(CAR_NAME);
-                // String tm_make_edit = intent.getStringExtra(CAR_MAKE);
-                // String tm_model_edit= intent.getStringExtra(CAR_MODEL);
-                // String tm_year_edit = intent.getStringExtra(CAR_P_YEAR);
-                // String tm_color_edit= intent.getStringExtra(CAR_COLOR);
                 Car car1;
                 car1 = (Car) data.getSerializableExtra(EditActivity.OBJECT);
                 cars.set(pos,car1);
@@ -118,8 +116,27 @@ public class MainActivity extends Activity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.options_menu,menu);
+        MenuItem SeachItem =  menu.findItem(R.id.car_search);
+        View SeachView =  MenuItemCompat.getActionView(SeachItem);
+        DoSearch(SeachView);
+
         return true;
 
+    }
+
+    private void DoSearch(View seachView) {
+        seachView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                return false;
+            }
+        });
     }
 
     @Override

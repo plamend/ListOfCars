@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SearchViewCompat;
 import android.support.v7.app.ActionBarActivity;
+import android.view.ActionMode;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -31,6 +32,8 @@ import static net.wtfitio.listofcars.R.string.*;
  */
 public class MainActivity extends ActionBarActivity {
     private android.support.v7.widget.SearchView searchView;
+    private android.support.v7.view.ActionMode contextualActionMode;
+    private android.support.v7.view.ActionMode.Callback contextualActionModeCallBack;
     List<Car> cars;
     ListView list;
     CarsAdapter adapter;
@@ -49,11 +52,10 @@ public class MainActivity extends ActionBarActivity {
 
 
 
+                init();
+                listeners();
 
 
-            this.list = (ListView)findViewById(R.id.list);
-            this.cars =new ArrayList<Car>();
-            cars = genCars();
             this.adapter = new CarsAdapter(this,R.layout.cars_list_layout,cars);
             list.setAdapter(adapter);
             registerForContextMenu(list);
@@ -61,6 +63,73 @@ public class MainActivity extends ActionBarActivity {
 
 
 
+
+
+
+    }
+
+    private void listeners() {
+        list.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+
+                MainActivity.this.contextualActionMode = startSupportActionMode(contextualActionModeCallBack);
+                contextualActionMode.setTag(l);
+                return true;
+            }
+        });
+    }
+
+    private void init() {
+        this.list = (ListView)findViewById(R.id.list);
+        this.cars =new ArrayList<Car>();
+        cars = genCars();
+
+        this.contextualActionModeCallBack = new android.support.v7.view.ActionMode.Callback() {
+            @Override
+            public boolean onCreateActionMode(android.support.v7.view.ActionMode actionMode, Menu menu) {
+               MenuInflater inflater = getMenuInflater();
+                inflater.inflate(R.menu.contex_menu,menu);
+
+                return true;
+            }
+
+            @Override
+            public boolean onPrepareActionMode(android.support.v7.view.ActionMode actionMode, Menu menu) {
+                return false;
+            }
+
+            @Override
+            public boolean onActionItemClicked(android.support.v7.view.ActionMode actionMode, MenuItem menuItem) {
+                int itemID =menuItem.getItemId();
+
+
+                AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuItem.getMenuInfo();
+                switch (itemID){
+                    case R.id.car_edit:
+                        if (info != null) {
+                            EditCar(info.position);
+                            MainActivity.this.contextualActionMode.finish();
+                            return true;
+                        }
+                        return true;
+                    case R.id.car_delete:
+                        if (info != null) {
+                            DeleteCar(info.position);
+                            MainActivity.this.contextualActionMode.finish();
+                            return true;
+                            }
+                }
+
+                return false;
+            }
+
+            @Override
+            public void onDestroyActionMode(android.support.v7.view.ActionMode actionMode) {
+                MainActivity.this.contextualActionMode=null;
+            }
+        };
 
 
 
@@ -120,7 +189,7 @@ public class MainActivity extends ActionBarActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.options_menu,menu);
-       initSeach(menu);
+        initSeach(menu);
 
 
 
@@ -192,7 +261,7 @@ public class MainActivity extends ActionBarActivity {
 
     }
 
-    @Override
+    /*@Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
         MenuInflater inflater = getMenuInflater();
@@ -217,7 +286,7 @@ public class MainActivity extends ActionBarActivity {
                 }
         }
         return super.onContextItemSelected(item);
-    }
+    }*/
 
     private void DeleteCar(int position) {
     cars.remove(position);
@@ -242,4 +311,6 @@ public class MainActivity extends ActionBarActivity {
         Intent intent = new Intent(this,AddActivity.class);
         startActivityForResult(intent, 1);
     }
+
+
 }

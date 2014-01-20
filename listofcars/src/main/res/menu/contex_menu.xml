@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:listofcars="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/car_edit"
-        android:title="@string/car_edit"/>
+        android:title="@string/car_edit"
+        listofcars:showAsAction="ifRoom"/>
     <item
         android:id="@+id/car_delete"
-        android:title="@string/car_delete"/>
+        android:title="@string/car_delete"
+        listofcars:showAsAction="ifRoom"/>
 
 </menu>

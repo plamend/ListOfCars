@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import net.wtfitio.listofcars.adapter.CarsAdapter;
 import net.wtfitio.listofcars.car_class.Car;
@@ -23,10 +24,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.zip.Inflater;
 
+import static net.wtfitio.listofcars.R.string.*;
+
 /**
  * Created by plamend on 1/17/14.
  */
 public class MainActivity extends ActionBarActivity {
+    private android.support.v7.widget.SearchView searchView;
     List<Car> cars;
     ListView list;
     CarsAdapter adapter;
@@ -116,28 +120,62 @@ public class MainActivity extends ActionBarActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.options_menu,menu);
-        MenuItem SeachItem =  menu.findItem(R.id.car_search);
-        View SeachView =  MenuItemCompat.getActionView(SeachItem);
-        DoSearch(SeachView);
+       initSeach(menu);
+
+
 
         return true;
 
     }
 
-    private void DoSearch(View seachView) {
-        seachView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String s) {
+    private void initSeach(Menu menu) {
+        MenuItem menuitem = menu.findItem(R.id.car_search);
+        this.searchView = (android.support.v7.widget.SearchView) MenuItemCompat.getActionView(menuitem);
+        this.searchView.setQueryHint("Some car info");
+       this.searchView.setOnQueryTextListener(new android.support.v7.widget.SearchView.OnQueryTextListener() {
+           @Override
+           public boolean onQueryTextSubmit(String s) {
 
-                return false;
-            }
+               List<Car> new_list = new ArrayList<Car>();
 
+               for (Car car1:cars) {
+                   StringBuilder sb = new StringBuilder();
+                   sb.append(car1.getName());
+                   sb.append(car1.getMake());
+                   sb.append(car1.getModel());
+                   sb.append(car1.getProdYear());
+                   sb.append(car1.getColor());
+
+
+                   if (sb.toString().contains(s)){
+                       new_list.add(car1);
+                   }
+               }
+               if(new_list.size() !=0){
+               CarsAdapter adapter1 = new CarsAdapter(MainActivity.this,R.layout.cars_list_layout,new_list);
+                MainActivity.this.list.setAdapter(adapter1);
+               return true;
+               }
+               else{
+                   Toast.makeText(MainActivity.this, no_match,Toast.LENGTH_SHORT).show();
+                   return false;
+               }
+           }
+
+           @Override
+           public boolean onQueryTextChange(String s) {
+               return false;
+           }
+       });
+        this.searchView.setOnCloseListener(new android.support.v7.widget.SearchView.OnCloseListener() {
             @Override
-            public boolean onQueryTextChange(String s) {
+            public boolean onClose() {
+                MainActivity.this.list.setAdapter(adapter);
                 return false;
             }
         });
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

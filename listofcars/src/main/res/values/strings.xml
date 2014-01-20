@@ -20,5 +20,6 @@
     <string name="title_section2">Section 2</string>
     <string name="title_section3">Section 3</string>
     <string name="action_settings">Settings</string>
-
+    <string name="no_match">No match</string>
+    <string name="query_hint">Some car info </string>
 </resources>

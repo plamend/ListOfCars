@@ -37,6 +37,7 @@ public class MainActivity extends ActionBarActivity {
     List<Car> cars;
     ListView list;
     CarsAdapter adapter;
+    int position1;
     public static String ACT="ACT";
     public static String CAR_NAME="CAR_NAME";
     public static String CAR_MAKE="CAR_MAKE";
@@ -73,12 +74,15 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-
+                MainActivity.this.position1=i;
                 MainActivity.this.contextualActionMode = startSupportActionMode(contextualActionModeCallBack);
-                contextualActionMode.setTag(l);
+
                 return true;
             }
         });
+    }
+    private interface interfacedActionCallback extends android.support.v7.view.ActionMode.Callback {
+        public void setPosition(int position);
     }
 
     private void init() {
@@ -86,7 +90,16 @@ public class MainActivity extends ActionBarActivity {
         this.cars =new ArrayList<Car>();
         cars = genCars();
 
-        this.contextualActionModeCallBack = new android.support.v7.view.ActionMode.Callback() {
+        this.contextualActionModeCallBack = new interfacedActionCallback() {
+
+            public  int position;
+
+            public void setPosition(int position) {
+                this.position = position;
+            }
+
+
+
             @Override
             public boolean onCreateActionMode(android.support.v7.view.ActionMode actionMode, Menu menu) {
                MenuInflater inflater = getMenuInflater();
@@ -108,18 +121,16 @@ public class MainActivity extends ActionBarActivity {
                 AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuItem.getMenuInfo();
                 switch (itemID){
                     case R.id.car_edit:
-                        if (info != null) {
-                            EditCar(info.position);
+
+                            EditCar(position1);
                             MainActivity.this.contextualActionMode.finish();
                             return true;
-                        }
-                        return true;
+
                     case R.id.car_delete:
-                        if (info != null) {
-                            DeleteCar(info.position);
+                            DeleteCar(position1);
                             MainActivity.this.contextualActionMode.finish();
                             return true;
-                            }
+
                 }
 
                 return false;
@@ -271,6 +282,7 @@ public class MainActivity extends ActionBarActivity {
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
+        ContextMenu.ContextMenuInfo info1 = item.getMenuInfo();
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         switch (item.getItemId()){
             case R.id.car_edit:

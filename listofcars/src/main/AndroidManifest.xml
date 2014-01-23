@@ -24,6 +24,9 @@
             android:name="net.wtfitio.listofcars.car_class.test"
             android:label="@string/title_activity_test" >
         </activity>
+        <activity android:name=".ViewAndShareActivity">
+
+        </activity>
     </application>
 
 </manifest>

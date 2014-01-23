@@ -80,7 +80,25 @@ public class MainActivity extends ActionBarActivity {
                 return true;
             }
         });
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent send_for_view = create_share();
+                Car tempo_car;
+                tempo_car = cars.get(i);
+                send_for_view.putExtra(ViewAndShareActivity.TOSHARE,tempo_car);
+                startActivity(send_for_view);
+
+
+            }
+        });
     }
+
+    private Intent create_share() {
+        Intent intent = new Intent(this,ViewAndShareActivity.class);
+        return intent;
+    }
+
     private interface interfacedActionCallback extends android.support.v7.view.ActionMode.Callback {
         public void setPosition(int position);
     }

@@ -25,6 +25,8 @@ public class ViewAndShareActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.view_and_share_layout);
+        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
         Car car_to_share;
         this.name = (TextView)findViewById(R.id.car_name_share);
         this.make = (TextView)findViewById(R.id.car_make_share);

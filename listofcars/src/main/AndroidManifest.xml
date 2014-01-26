@@ -17,15 +17,16 @@
             </intent-filter>
         </activity>
         <activity android:name="net.wtfitio.listofcars.AddActivity" >
+            <meta-data android:name="android.support.PARENT_ACTIVITY"
+                android:value="net.wtfitio.listofcars.MainActivity"/>
         </activity>
         <activity android:name="net.wtfitio.listofcars.EditActivity" >
-        </activity>
-        <activity
-            android:name="net.wtfitio.listofcars.car_class.test"
-            android:label="@string/title_activity_test" >
+            <meta-data android:name="android.support.PARENT_ACTIVITY"
+                android:value="net.wtfitio.listofcars.MainActivity"/>
         </activity>
         <activity android:name=".ViewAndShareActivity">
-
+            <meta-data android:name="android.support.PARENT_ACTIVITY"
+                android:value="net.wtfitio.listofcars.MainActivity"/>
         </activity>
     </application>
 

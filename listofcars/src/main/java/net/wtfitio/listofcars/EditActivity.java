@@ -3,6 +3,7 @@ package net.wtfitio.listofcars;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,7 +14,7 @@ import net.wtfitio.listofcars.car_class.Car;
 /**
  * Created by plamend on 1/17/14.
  */
-public class EditActivity extends Activity {
+public class EditActivity extends ActionBarActivity {
     public static String POSITION="pos";
     public static String OBJECT = "car";
     EditText name_imput;
@@ -26,6 +27,8 @@ public class EditActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.edit_layput);
+        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         Intent intent_in = getIntent();
         Car car_in;

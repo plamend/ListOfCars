@@ -26,6 +26,9 @@ public class AddActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_layout);
+        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+
 
         this.name_imput = (EditText)findViewById(R.id.car_name_input);
         this.make_imput = (EditText)findViewById(R.id.car_make_input);

@@ -284,11 +284,16 @@ public class MainActivity extends ActionBarActivity {
             case R.id.car_search:
                 SearchCar();
                 return true;
+            case R.id.alt_serach:
+                AltSearch();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
 
     }
+
+
 
     /*@Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
@@ -332,7 +337,8 @@ public class MainActivity extends ActionBarActivity {
         startActivityForResult(intent, 2);
 
     }
-
+    private void AltSearch() {
+    }
     private void SearchCar() {
 
     }

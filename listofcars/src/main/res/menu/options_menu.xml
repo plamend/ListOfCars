@@ -13,4 +13,7 @@
         android:title="@string/car_add"
         android:icon="@android:drawable/ic_menu_add"
         listofcars:showAsAction="ifRoom"/>
+    <item
+        android:id = "@+id/alt_serach"
+        android:title="Alt Search"/>
 </menu>
